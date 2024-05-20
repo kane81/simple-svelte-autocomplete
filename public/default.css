@@ -37,7 +37,10 @@ ul {
 .column.is-one-third {
   width: 33%;
 }
-
 .is-fullwidth {
   width: 100%;
+}
+
+.autocomplete-input {
+    width: 100%;
 }

@@ -172,7 +172,7 @@
   export let autocompleteOffValue = "off"
 
   // allow custom input attributes
-  export let inputAttributes = { autocomplete: "new-password" }
+  export let inputAttributes = "{ autocomplete: 'new-password' }"
 
   // make the input readonly
   export let readonly = undefined
@@ -1199,7 +1199,7 @@
       on:keypress={onKeyPress}
       on:dragover={(event) => dragover(event, selectedItem.length - 1)}
       on:drop={(event) => drop(event, selectedItem.length - 1)}
-      {inputAttributes}
+      {...inputAttributes}
       {...$$restProps}
     />
     {#if clearable}
