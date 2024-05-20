@@ -1,7 +1,7 @@
 <script>
   import { flip } from "svelte/animate"
   import { fade } from "svelte/transition"
-  import {afterUpdate} from 'svelte'
+  import { afterUpdate } from "svelte"
 
   // the list of items  the user can select from
   export let items = []
@@ -51,7 +51,7 @@
   }
 
   export const clearSelection = () => {
-    text = ''
+    text = ""
     selectedItem = multiple ? [] : undefined
     items = []
     listItems = []
@@ -170,6 +170,10 @@
   export let html5autocomplete = undefined
   // enable the html5 autocompletion value
   export let autocompleteOffValue = "off"
+
+  // allow custom input attributes
+  export let inputAttributes = { autocomplete: "new-password" }
+
   // make the input readonly
   export let readonly = undefined
   // apply a className to the dropdown div
@@ -220,12 +224,12 @@
   // other state
   let inputDelayTimeout
 
-  let setPositionOnNextUpdate = false;
+  let setPositionOnNextUpdate = false
 
   // --- Lifecycle events ---
 
   afterUpdate(() => {
-    if(setPositionOnNextUpdate) {
+    if (setPositionOnNextUpdate) {
       setScrollAwareListPosition()
     }
     setPositionOnNextUpdate = false
@@ -243,7 +247,7 @@
       result = theFunction(argument)
     } catch (error) {
       console.warn(
-        "Error executing Autocomplete function on value: " + argument + " function: " + theFunction
+        "Error executing Autocomplete function on value: " + argument + " function: " + theFunction,
       )
     }
     return result
@@ -508,7 +512,7 @@
     return numberOfMatches(obj2, searchWords) - numberOfMatches(obj1, searchWords)
   }
 
-  function processListItems(textFiltered="") {
+  function processListItems(textFiltered = "") {
     // cleans, filters, orders, and highlights the list items
     prepareListItems()
 
@@ -520,23 +524,23 @@
     if (localFiltering) {
       if (itemFilterFunction) {
         tempfilteredListItems = listItems.filter((item) =>
-          itemFilterFunction(item.item, searchWords)
+          itemFilterFunction(item.item, searchWords),
         )
       } else {
         tempfilteredListItems = listItems.filter((item) =>
-          defaultItemFilterFunction(item, searchWords)
+          defaultItemFilterFunction(item, searchWords),
         )
       }
 
       if (localSorting) {
         if (itemSortFunction) {
           tempfilteredListItems = tempfilteredListItems.sort((item1, item2) =>
-            itemSortFunction(item1.item, item2.item, searchWords)
+            itemSortFunction(item1.item, item2.item, searchWords),
           )
         } else {
           if (sortByMatchedKeywords) {
             tempfilteredListItems = tempfilteredListItems.sort((item1, item2) =>
-              defaultItemSortFunction(item1, item2, searchWords)
+              defaultItemSortFunction(item1, item2, searchWords),
             )
           }
         }
@@ -712,7 +716,7 @@
       } else {
         if (debug) {
           console.warn(
-            "Could not scroll selected item into view, scrollIntoViewIfNeeded not supported"
+            "Could not scroll selected item into view, scrollIntoViewIfNeeded not supported",
           )
         }
       }
@@ -1122,6 +1126,7 @@
     }
   }
 </script>
+
 <div
   class="{className ? className : ''} autocomplete select is-fullwidth {uniqueId}"
   class:hide-arrow={hideArrow || !items.length}
@@ -1161,7 +1166,9 @@
               <span
                 class="tag is-delete"
                 on:click|preventDefault={unselectItem(tagItem)}
-                on:keypress|preventDefault={(e) => {e.key == "Enter" && unselectItem(tagItem)}}
+                on:keypress|preventDefault={(e) => {
+                  e.key == "Enter" && unselectItem(tagItem)
+                }}
               />
             </div>
           </slot>
@@ -1192,14 +1199,17 @@
       on:keypress={onKeyPress}
       on:dragover={(event) => dragover(event, selectedItem.length - 1)}
       on:drop={(event) => drop(event, selectedItem.length - 1)}
+      {inputAttributes}
       {...$$restProps}
     />
     {#if clearable}
       <span
         on:click={clear}
-        on:keypress={(e) => {e.key == "Enter" && clear()}}
-        class="autocomplete-clear-button"
-        >{@html clearText}</span>
+        on:keypress={(e) => {
+          e.key == "Enter" && clear()
+        }}
+        class="autocomplete-clear-button">{@html clearText}</span
+      >
     {/if}
   </div>
   <div
@@ -1217,7 +1227,9 @@
             class:selected={i === highlightIndex}
             class:confirmed={isConfirmed(listItem.item)}
             on:click={() => onListItemClick(listItem)}
-            on:keypress={(e) => {e.key == "Enter" && onListItemClick(listItem)}}
+            on:keypress={(e) => {
+              e.key == "Enter" && onListItemClick(listItem)
+            }}
             on:pointerenter={() => {
               highlightIndex = i
             }}
@@ -1255,7 +1267,9 @@
       <div
         class="autocomplete-list-item-create"
         on:click={selectItem}
-        on:keypress={(e) => {e.key == "Enter" && selectItem()}}
+        on:keypress={(e) => {
+          e.key == "Enter" && selectItem()
+        }}
       >
         <slot name="create" {createText}>{createText}</slot>
       </div>
@@ -1267,7 +1281,7 @@
   </div>
 </div>
 
-<svelte:window on:click={onDocumentClick} on:scroll={() => setPositionOnNextUpdate = true} />
+<svelte:window on:click={onDocumentClick} on:scroll={() => (setPositionOnNextUpdate = true)} />
 
 <style>
   .autocomplete {
