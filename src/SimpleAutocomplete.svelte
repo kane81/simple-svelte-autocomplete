@@ -359,7 +359,7 @@
   $: hasSelection =
     (multiple && selectedItem && selectedItem.length > 0) || (!multiple && selectedItem)
 
-  $: clearable = showClear || ((lock || multiple) && hasSelection)
+  $: clearable = !readonly && !disabled && (showClear || ((lock || multiple) && selectedItem))
 
   $: locked = lock && hasSelection
 
