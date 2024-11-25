@@ -1389,6 +1389,11 @@
     padding: 5px 15px;
     line-height: 1;
   }
+  .autocomplete-list-item-create:hover {
+    background-color: #2e69e2;
+    color: #fff;
+    cursor: pointer;    
+  } 
   .autocomplete-list-item-loading {
     padding: 5px 15px;
     line-height: 1;
