@@ -1220,45 +1220,47 @@
     {#if filteredListItems && filteredListItems.length > 0}
       <slot name="dropdown-header" nbItems={filteredListItems.length} {maxItemsToShowInList} />
 
-      {#each filteredListItems as listItem, i}
+      {#each (create ? [...filteredListItems, selectItem] : filteredListItems) as listItem, i}
         {#if listItem && (maxItemsToShowInList <= 0 || i < maxItemsToShowInList)}
-          <div
-            class="autocomplete-list-item"
-            class:selected={i === highlightIndex}
-            class:confirmed={isConfirmed(listItem.item)}
-            on:click={() => onListItemClick(listItem)}
-            on:keypress={(e) => {
-              e.key == "Enter" && onListItemClick(listItem)
-            }}
-            on:pointerenter={() => {
-              highlightIndex = i
-            }}
-          >
-            <slot
-              name="item"
-              item={listItem.item}
-              label={listItem.highlighted ? listItem.highlighted : listItem.label}
+          {#if create && i === filteredListItems.length}
+            <div
+              class="autocomplete-list-item"
+              class:selected={i === highlightIndex}
+              on:click={selectItem}
+              on:keypress={(e) => {
+                e.key == "Enter" && selectItem()
+              }}
             >
-              {#if listItem.highlighted}
-                {@html listItem.highlighted}
-              {:else}
-                {@html listItem.label}
-              {/if}
-            </slot>
-          </div>
+              <slot name="create" {createText}>{createText}</slot>
+            </div>
+          {:else}
+            <div
+              class="autocomplete-list-item"
+              class:selected={i === highlightIndex}
+              class:confirmed={isConfirmed(listItem.item)}
+              on:click={() => onListItemClick(listItem)}
+              on:keypress={(e) => {
+                e.key == "Enter" && onListItemClick(listItem)
+              }}
+              on:pointerenter={() => {
+                highlightIndex = i
+              }}
+            >
+              <slot
+                name="item"
+                item={listItem.item}
+                label={listItem.highlighted ? listItem.highlighted : listItem.label}
+              >
+                {#if listItem.highlighted}
+                  {@html listItem.highlighted}
+                {:else}
+                  {@html listItem.label}
+                {/if}
+              </slot>
+            </div>
+        {/if}
         {/if}
       {/each}
-      {#if create}
-      <div
-        class="autocomplete-list-item-create"
-        on:click={selectItem}
-        on:keypress={(e) => {
-          e.key == "Enter" && selectItem()
-        }}
-      >
-        <slot name="create" {createText}>{createText}</slot>
-      </div>
-      {/if}
 
       <slot name="dropdown-footer" nbItems={filteredListItems.length} {maxItemsToShowInList}>
         {#if maxItemsToShowInList > 0 && filteredListItems.length > maxItemsToShowInList}
