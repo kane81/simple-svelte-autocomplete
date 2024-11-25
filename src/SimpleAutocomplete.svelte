@@ -1230,6 +1230,9 @@
               on:keypress={(e) => {
                 e.key == "Enter" && selectItem()
               }}
+              on:pointerenter={() => {
+                highlightIndex = i
+              }}              
             >
               <slot name="create" {createText}>{createText}</slot>
             </div>
