@@ -1248,6 +1248,17 @@
           </div>
         {/if}
       {/each}
+      {#if create}
+      <div
+        class="autocomplete-list-item-create"
+        on:click={selectItem}
+        on:keypress={(e) => {
+          e.key == "Enter" && selectItem()
+        }}
+      >
+        <slot name="create" {createText}>{createText}</slot>
+      </div>
+      {/if}
 
       <slot name="dropdown-footer" nbItems={filteredListItems.length} {maxItemsToShowInList}>
         {#if maxItemsToShowInList > 0 && filteredListItems.length > maxItemsToShowInList}
