@@ -68,7 +68,7 @@
   }
   export let onChange = function (newSelectedItem) {}
   export let onFocus = function () {}
-  export let onBlur = function () {}
+  export let onBlur = function () {text}
   export let onCreate = function (text) {
     if (debug) {
       console.log("onCreate: " + text)
@@ -876,7 +876,7 @@
       close()
     }
 
-    onBlur()
+    onBlur(text);
   }
 
   function resetListToAllItemsAndOpen() {
