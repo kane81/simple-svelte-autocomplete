@@ -1226,6 +1226,9 @@
     {#if filteredListItems && filteredListItems.length > 0}
       <slot name="dropdown-header" nbItems={filteredListItems.length} {maxItemsToShowInList} />
 
+      {console.log(filteredListItems)} 
+      {console.log(selectItem)}
+
       {#each (create ? [...filteredListItems, selectItem] : filteredListItems) as listItem, i}
         {#if listItem && (maxItemsToShowInList <= 0 || i < maxItemsToShowInList)}
           {#if create && i === filteredListItems.length}
