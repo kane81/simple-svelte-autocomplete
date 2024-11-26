@@ -1228,7 +1228,7 @@
 
       {#each (create ? [...filteredListItems, selectItem] : filteredListItems) as listItem, i}
         {#if listItem && (maxItemsToShowInList <= 0 || i < maxItemsToShowInList)}
-          {#if create && i === filteredListItems.length}
+          {#if create && i === filteredListItems.length && filteredListItems.some(item => item.label === createText)}
             <div
               class="autocomplete-list-item"
               class:selected={i === highlightIndex}
