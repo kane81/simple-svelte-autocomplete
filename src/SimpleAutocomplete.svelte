@@ -172,7 +172,7 @@
   export let autocompleteOffValue = "off"
 
   // allow custom input attributes
-  export let attribute = "autocomplete='new-password'"
+  export let attribute = "autocomplete='one-time-code'"
 
   // make the input readonly
   export let readonly = undefined
@@ -1151,6 +1151,8 @@
     {#if multiple && hasSelection}
       {#each selectedItem as tagItem, i (valueFunction(tagItem, true))}
         <div
+          role="button"        
+          tabindex="0"        
           draggable={true}
           animate:flip={{ duration: 200 }}
           transition:fade={{ duration: 200 }}
@@ -1165,6 +1167,8 @@
               <span class="tag">{safeLabelFunction(tagItem)}</span>
               <span
                 class="tag is-delete"
+                role="button"        
+                tabindex="0"    
                 on:click|preventDefault={unselectItem(tagItem)}
                 on:keypress|preventDefault={(e) => {
                   e.key == "Enter" && unselectItem(tagItem)
@@ -1199,11 +1203,13 @@
       on:keypress={onKeyPress}
       on:dragover={(event) => dragover(event, selectedItem.length - 1)}
       on:drop={(event) => drop(event, selectedItem.length - 1)}
-      attribute
+      {attribute}
       {...$$restProps}
     />
     {#if clearable}
       <span
+        role="button"        
+        tabindex="0"
         on:click={clear}
         on:keypress={(e) => {
           e.key == "Enter" && clear()
@@ -1226,6 +1232,8 @@
             <div
               class="autocomplete-list-item"
               class:selected={i === highlightIndex}
+              role="button"        
+              tabindex="0"
               on:click={selectItem}
               on:keypress={(e) => {
                 e.key == "Enter" && selectItem()
@@ -1241,6 +1249,8 @@
               class="autocomplete-list-item"
               class:selected={i === highlightIndex}
               class:confirmed={isConfirmed(listItem.item)}
+              role="button"        
+              tabindex="0" 
               on:click={() => onListItemClick(listItem)}
               on:keypress={(e) => {
                 e.key == "Enter" && onListItemClick(listItem)
@@ -1282,6 +1292,8 @@
     {:else if create}
       <div
         class="autocomplete-list-item-create"
+        role="button"        
+        tabindex="0"
         on:click={selectItem}
         on:keypress={(e) => {
           e.key == "Enter" && selectItem()
