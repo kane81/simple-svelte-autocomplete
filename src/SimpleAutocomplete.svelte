@@ -1228,22 +1228,24 @@
 
       {#each (create ? [...filteredListItems, selectItem] : filteredListItems) as listItem, i}
         {#if listItem && (maxItemsToShowInList <= 0 || i < maxItemsToShowInList)}
-          {#if create && i === filteredListItems.length && filteredListItems.some(item => item.label === createText)}
-            <div
-              class="autocomplete-list-item"
-              class:selected={i === highlightIndex}
-              role="button"        
-              tabindex="0"
-              on:click={selectItem}
-              on:keypress={(e) => {
-                e.key == "Enter" && selectItem()
-              }}
-              on:pointerenter={() => {
-                highlightIndex = i
-              }}              
-            >
-              <slot name="create" {createText}>{createText}</slot>
-            </div>
+          {#if create && i === filteredListItems.length}
+            {#if !filteredListItems.some(item => item.label === createText)}
+              <div
+                class="autocomplete-list-item"
+                class:selected={i === highlightIndex}
+                role="button"        
+                tabindex="0"
+                on:click={selectItem}
+                on:keypress={(e) => {
+                  e.key == "Enter" && selectItem()
+                }}
+                on:pointerenter={() => {
+                  highlightIndex = i
+                }}              
+              >
+                <slot name="create" {createText}>{createText}</slot>
+              </div>
+            {/if}
           {:else}
             <div
               class="autocomplete-list-item"
